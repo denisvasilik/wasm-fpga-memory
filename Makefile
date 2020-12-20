@@ -13,15 +13,17 @@ prepare:
 project: prepare
 	@vivado -mode batch -source scripts/create_project.tcl -notrace -nojournal -tempDir work -log work/vivado.log
 
-package: prepare
-	@vivado -mode batch -source scripts/package_ip.tcl -notrace -nojournal -tempDir work -log work/vivado.log
+package:
+	python3 setup.py sdist bdist_wheel
 
 clean:
 	@find ip ! -iname *.xci -type f -exec rm {} +
 	@rm -rf .Xil vivado*.log vivado*.str vivado*.jou
 	@rm -rf work \
 		src-gen \
-		hxs_gen
+		hxs_gen \
+		dist \
+		*.egg-info \
 	@rm -rf ip/**/hdl \
 		ip/**/synth \
 		ip/**/example_design \
@@ -29,5 +31,14 @@ clean:
 		ip/**/simulation \
 		ip/**/misc \
 		ip/**/doc
+
+install-from-test-pypi:
+	pip3 install --upgrade -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple wasm-fpga-memory
+
+upload-to-test-pypi: package
+	python3 -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+
+upload-to-pypi: package
+	python3 -m twine upload --repository pypi dist/*
 
 .PHONY: all prepare project package clean hxs
