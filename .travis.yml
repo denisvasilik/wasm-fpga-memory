@@ -1,0 +1,17 @@
+dist: xenial
+language: python
+python:
+- 3.6.9
+- '3.7'
+install:
+- pip install -r requirements.txt
+script:
+- "/bin/bash -c ci/run.sh"
+deploy:
+  provider: pypi
+  user: __token__
+  password:
+    secure: CcH3ONLwRdpgDafCK1EIjDQpIB9qH7HchnSBWaZkV3/HtfPm00imjyViaR9nDI5jUVBFf074oGjmsN5nRKymvCkGMNe7gKHn3DDjJmsuQOqMjKuLx45rBBNhu1KR9n1sD6TZwDl2GLU4mrSvID1g8CiJ6wMvHwU7VXherAl2ojsIak3UMR+XDKxa10YRh0GSpEOi/lLDLbBtYNkPjuZRqZ+V/+h0NHrWclWkwRCxXuk1hJUyAiFZJcvSn1y7pw1ZLhIf7La+18tVSCZ0XLyqYnPfL4laYvRQLx612ChsTtSq+BC4n+JcOr3CcnSnYdzHbgmtKXq3fD+kGV8NtmlMV0oR9RpIFkGoue28HjCpdW3cjtSYOc1ZHKb5lPbaqfwoItXIToMXgAiQIlVdYx3qUZzt37ongIojYkgDm5fH5bpFVVJTBrucgIWegLtB4KVVM4RaH5CRLdOMLft47Y5mGYHD+8yqLtYFbiSeh+KcEO/kychCu25oQ2KgYYihpS37h93GXua1unT1RAsf4KhHT8P3xVKrRzVO2PkPo3oZdqqXOYsb4bbuqn1M3i+paeZbIC/Hm85um4fPIGUlPdlRQBDP0vpJMZ9dyvldIlCFPoK7hKELDCICb+Ni/wY/gCBQNuIBAKV/oE4N3qsa9vpi8NMdqN5UZYxdpCpx5rh8gXk=
+  distributions: sdist bdist_wheel
+  skip_existing: true
+  skip_cleanup: true
