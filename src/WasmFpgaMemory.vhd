@@ -6,14 +6,14 @@ library work;
   use work.WasmFpgaMemoryPackage.all;
 
 entity WasmFpgaMemory is
-    port ( 
+    port (
         Clk : in std_logic;
         nRst : in std_logic;
         Adr : in std_logic_vector(23 downto 0);
         Sel : in std_logic_vector(3 downto 0);
-        DatIn : in std_logic_vector(31 downto 0); 
+        DatIn : in std_logic_vector(31 downto 0);
         We : in std_logic;
-        Stb : in std_logic; 
+        Stb : in std_logic;
         Cyc : in std_logic_vector(0 downto 0);
         DatOut : out std_logic_vector(31 downto 0);
         Ack : out std_logic
@@ -23,7 +23,7 @@ end entity;
 architecture WasmFpgaMemoryArchitecture of WasmFpgaMemory is
 
   component WasmFpgaMemoryRam is
-    port ( 
+    port (
       clka : in std_logic;
       ena : in std_logic;
       wea : in std_logic_vector( 0 to 0 );
@@ -66,6 +66,7 @@ begin
       DatOut <= (others => '0');
       Enable <= '0';
       WriteEnable <= "0";
+      WriteData <= (others => '0');
       Address <= (others => '0');
       WbState <= (others => '0');
     elsif rising_edge(Clk) then
@@ -106,7 +107,7 @@ begin
   end process;
 
   WasmFpgaMemoryRam_i : WasmFpgaMemoryRam
-    port map ( 
+    port map (
       clka => Clk,
       ena => Enable,
       wea => WriteEnable,
