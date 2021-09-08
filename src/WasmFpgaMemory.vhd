@@ -61,16 +61,16 @@ begin
 
   ModuleAccess : process (Clk, Rst) is
   begin
-    if (Rst = '1') then
-      Ack <= '0';
-      DatOut <= (others => '0');
-      Enable <= '0';
-      WriteEnable <= "0";
-      WriteData <= (others => '0');
-      Address <= (others => '0');
-      WbState <= (others => '0');
-    elsif rising_edge(Clk) then
-      if(WbState = WbStateIdle0) then
+    if rising_edge(Clk) then
+      if (Rst = '1') then
+        Ack <= '0';
+        DatOut <= (others => '0');
+        Enable <= '0';
+        WriteEnable <= "0";
+        WriteData <= (others => '0');
+        Address <= (others => '0');
+        WbState <= (others => '0');
+      elsif (WbState = WbStateIdle0) then
         Ack <= '0';
         Enable <= '0';
         if (Cyc = "1" and We = '0') then
